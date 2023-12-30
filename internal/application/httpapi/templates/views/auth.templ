@@ -1,0 +1,10 @@
+package views
+
+import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/shared"
+import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/components"
+
+templ Auth(){
+	@shared.Index(){
+		@components.LoginForm()
+	}
+}

@@ -1,0 +1,21 @@
+package components
+
+templ RegisterForm(){
+	<form class="border border-white p-4 w-11/12 max-w-[400px] flex flex-col gap-4" id="form">
+		<h1 class="text-center text-lg font-medium">Register</h1>
+		<div class="flex flex-col gap-2">
+			<label for="login">Login</label>
+			<input required type="text" name="login" id="login" class="p-4 border border-white bg-transparent"/>
+		</div>
+		<div class="flex flex-col gap-2">
+			<label for="password">Password</label>
+			<input required type="password" name="password" id="password" class="p-4 border border-white bg-transparent"/>
+		</div>
+		<div class="flex flex-col gap-2">
+			<label for="confirmPassword">Confirm Password</label>
+			<input required type="password" name="confirmPassword" id="confirmPassword" class="p-4 border border-white bg-transparent"/>
+		</div>
+		@Button("Send", "w-full")
+		<div class="text-center">Already has an account? <a hx-swap="outerHTML" hx-get="/auth/login" hx-target="#form" class="cursor-pointer underline">Login here</a></div>
+	</form>
+}

@@ -1,0 +1,17 @@
+package views
+
+import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/shared"
+import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/components"
+
+templ Chat() {
+	@shared.Index() {
+		<section class="flex gap-12 items-center w-11/12 flex-col" hx-ext="ws" ws-connect="/ws">
+			<div id="chat" class="border-white border overflow-y-scroll h-[700px] max-h-[700px] w-full flex flex-col"></div>
+			<form class="flex justify-between gap-4 w-full" ws-send>
+				<input placeholder="Type your name:" name="author" class="border text-white border-white p-4 bg-transparent"/>
+				<input required name="message" class="border text-white border-white p-4 w-full bg-transparent"/>
+				@components.Button("Send", "")
+			</form>
+		</section>
+	}
+}
