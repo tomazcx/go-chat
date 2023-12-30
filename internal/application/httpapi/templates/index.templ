@@ -12,22 +12,19 @@ templ Index() {
 			<script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
 			<!--UNOCSS-->
 			<script src="https://cdn.jsdelivr.net/npm/@unocss/runtime"></script>
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.min.css" />
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.min.css"/>
 		</head>
 		<body class="bg-indigo-950">
-			 <main class="flex justify-center items-center min-h-screen p-24">
+			<main class="flex justify-center items-center min-h-screen p-24">
 				<section class="flex gap-12 items-center w-11/12 flex-col" hx-ext="ws" ws-connect="/ws">
-					<div class="border-white border overflow-y-scroll h-[700px] max-h-[700px] w-full flex flex-col">
-						<div class="p-4 items-start flex gap-4 text-white" id="message">
-							<span class="whitespace-nowrap">Tomaz ></span>
-							<span>Hello world</span>
-					</div>
-
+					<div id="chat" class="border-white border overflow-y-scroll h-[700px] max-h-[700px] w-full flex flex-col">
 					</div>
 					<form class="flex justify-between gap-4 w-full" ws-send>
-						<input name="message" class="border text-white border-white p-4 w-full bg-transparent" />
+						<input placeholder="Type your name:" name="author" class="border text-white border-white p-4 bg-transparent"/>
+
+						<input required name="message" class="border text-white border-white p-4 w-full bg-transparent"/>
 						<button class="border border-white py-4 px-8 hover:bg-white hover:text-indigo-950 transition-colors text-white">Send</button>
-					</form>			
+					</form>
 				</section>
 			</main>
 		</body>
