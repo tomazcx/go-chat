@@ -1,14 +1,21 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
-	"github.com/tomazcx/go-chat-app/internal/application/handler"
+	"github.com/gofiber/fiber/v2"
+	"github.com/tomazcx/go-chat-app/internal/application/httpapi"
+	"github.com/tomazcx/go-chat-app/internal/application/websocket"
 )
 
-func main(){
-	chatHandler := handler.ChatHandler{}
-	http.HandleFunc("/", chatHandler.Index)
 
-	http.ListenAndServe(":8000", nil)	
+func main(){
+
+	app := fiber.New()
+
+	httpapi.DefineRoutes(app)
+	websocket.Init(app)
+
+	log.Fatal(app.Listen(":8000"))
+
 }
