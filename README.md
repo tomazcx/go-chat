@@ -10,3 +10,4 @@ A public chat room. Made with Golang and HTMX.
 - UnoCSS
 - SQLite database
 - WebSockets
+
