@@ -2,7 +2,9 @@ package main
 
 import (
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/tomazcx/go-chat-app/internal/application/httpapi/routes"
 	"github.com/tomazcx/go-chat-app/internal/application/httpapi/utils"
 	"github.com/tomazcx/go-chat-app/internal/application/websocket"
@@ -11,6 +13,11 @@ import (
 
 
 func main(){
+
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Error loading env variables: %v", err)
+	}
+
 	app := routes.MakeRouter()
 	websocket.Init(app)
 	err := database.InitializaDB()
@@ -20,6 +27,12 @@ func main(){
 		log.Fatalf("Error connecting to the database: %v", err)
 	}
 
-	log.Fatal(app.Listen(":8000"))
+	port := os.Getenv("PORT")
+
+	if len(port) == 0 {
+		port = "8000"
+	}
+
+	log.Fatal(app.Listen(":" + port))
 
 }
