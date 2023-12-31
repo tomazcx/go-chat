@@ -1,18 +1,17 @@
 package websocket
 
 import (
-	"bytes"
-	"context"
 	"encoding/json"
+	"fmt"
 	"log"
+	"sync"
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
-	"github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/components"
+	"github.com/tomazcx/go-chat-app/internal/application/websocket/socketutils"
 )
 
 type SocketMessage struct {
-	Author  string `json:"author"`
 	Message string `json:"message"`
 }
 
@@ -27,14 +26,24 @@ func Init(app *fiber.App) {
 	})
 
 	app.Get("/ws", websocket.New(func(c *websocket.Conn) {
+		m := sync.Mutex{}
+		m.Lock()
 		server.conns[c] = true
+		m.Unlock()
+		userName := c.Query("userName")
+
+		//notifies that the a user logged in
+		bufferizedMessage := socketutils.BufferizeMessage(fmt.Sprintf("The user %s has entered the chat!", userName), "")
+		server.Broadcast(bufferizedMessage, 1)
+
 		for {
 			mt, payload, err := c.ReadMessage()
 			if err != nil {
 				log.Println("connection closed.")
 				delete(server.conns, c)
+				bufferizedMessage := socketutils.BufferizeMessage(fmt.Sprintf("%s has left the chat!", userName), "")
+				server.Broadcast(bufferizedMessage, 1)
 				break
-
 			}
 
 			msg := SocketMessage{}
@@ -42,14 +51,8 @@ func Init(app *fiber.App) {
 				log.Printf("invalid message format: %v\n", err)
 				continue
 			}
-
-			if len(msg.Author) == 0 {
-				msg.Author = "Anonymous"
-			}
-
-			buffer := &bytes.Buffer{}
-			components.Message(msg.Author, msg.Message).Render(context.Background(), buffer)
-			server.Broadcast(buffer.Bytes(), mt)
+			bufferizedMessage := socketutils.BufferizeMessage(msg.Message, userName)
+			server.Broadcast(bufferizedMessage, mt)
 		}
 	}))
 }

@@ -1,7 +1,7 @@
 package components 
 
 templ LoginForm() {
-	<form class="border border-white p-4 w-11/12 max-w-[400px] flex flex-col gap-4" id="form">
+	<form hx-swap="outerHTML" hx-post="/auth/login" hx-target="#errorMessage" class="border border-white p-4 w-11/12 max-w-[400px] flex flex-col gap-4" id="form">
 		<h1 class="text-center text-lg font-medium">Login</h1>
 		<div class="flex flex-col gap-2">
 			<label for="login">Login</label>
@@ -12,6 +12,7 @@ templ LoginForm() {
 			<input required type="password" name="password" id="password" class={"p-4 border border-white bg-transparent", templ.SafeClass("autofill:bg-transparent")}/>
 		</div>
 		@Button("Send", "w-full")
+		@ErrorMessage("")
 		<div class="text-center">Don't have an account? <a hx-target="#form" hx-swap="outerHTML" hx-get="/auth/register" class="underline cursor-pointer">Register here</a></div>
 	</form>
 }

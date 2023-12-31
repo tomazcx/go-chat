@@ -13,6 +13,9 @@ func (a *AuthRouter) Load(r *fiber.App){
 	r.Get("/auth", a.h.Index)	
 	r.Get("/auth/login", a.h.LoginForm)	
 	r.Get("/auth/register", a.h.RegisterForm)	
+	r.Get("/auth/logout", a.h.HandleLogout)	
+	r.Post("/auth/login", a.h.HandleLogin)
+	r.Post("/auth/register", a.h.HandleRegister)	
 }
 
 func NewAuthRouter() *AuthRouter{

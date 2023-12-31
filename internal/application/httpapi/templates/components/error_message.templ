@@ -1,0 +1,5 @@
+package components
+
+templ ErrorMessage(message string){
+	<span id="errorMessage" class={ "text-red-400 text-center", templ.KV("hidden", len(message) == 0) }>{message}</span>
+}

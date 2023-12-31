@@ -10,7 +10,6 @@ import (
 
 var (
 	ErrLoginAlreadyRegistered = errors.New("Login already registered")
-	ErrPasswordsDoNotMatch = errors.New("Passwords do not match")
 )
 
 type CreateUserDTO struct {
@@ -29,10 +28,6 @@ func (uc *CreateUserUseCase) Execute(dto CreateUserDTO) (*entity.User, error) {
 
 	if err == nil {
 		return nil, ErrLoginAlreadyRegistered
-	}
-
-	if dto.Password != dto.ConfirmPassword {
-		return nil, ErrPasswordsDoNotMatch
 	}
 
 	user, err := entity.NewUser(dto.Login, dto.Password)

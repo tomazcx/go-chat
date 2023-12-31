@@ -3,11 +3,9 @@ package entity
 import (
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
 	ID       string
 	Login    string `gorm:"unique"`
 	Password string

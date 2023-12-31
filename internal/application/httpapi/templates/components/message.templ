@@ -3,7 +3,9 @@ package components
 templ Message(author string, message string) {
 	<div hx-swap-oob="beforeend:#chat">
 		<div class="px-4 py-2 items-start flex gap-4 text-white">
-			<span class="whitespace-nowrap">{author} ></span>
+			if len(author) > 0 {
+				<span class="whitespace-nowrap">{author} ></span>
+			}
 			<span>{message}</span>
 		</div>
 	</div>

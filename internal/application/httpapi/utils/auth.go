@@ -13,7 +13,7 @@ func InitSessionStore(){
 	store = session.New()
 }
 
-func SetUserSession(login string, c *fiber.Ctx) (*session.Session, error){
+func SetUserSession(c *fiber.Ctx, login string) (*session.Session, error){
 	sess, err := store.Get(c)
 
 	if err != nil {
@@ -22,6 +22,7 @@ func SetUserSession(login string, c *fiber.Ctx) (*session.Session, error){
 
 	sess.Set("user", login)
 	sess.SetExpiry(time.Hour * 24)
+	sess.Save()
 	return sess, nil
 }
 

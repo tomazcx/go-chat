@@ -13,9 +13,9 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		return c.Redirect("/auth")
 	}
 
-	user, ok := session.Get("user").(string)
+	user := session.Get("user")
 
-	if len(user) == 0 || !ok {
+	if user == nil {
 		return c.Redirect("/auth")
 	}
 

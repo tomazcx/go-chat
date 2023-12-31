@@ -3,15 +3,23 @@ package views
 import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/shared"
 import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/components"
 
-templ Chat() {
+templ Chat(userName string) {
 	@shared.Index() {
-		<section class="flex gap-12 items-center w-11/12 flex-col" hx-ext="ws" ws-connect="/ws">
-			<div id="chat" class="border-white border overflow-y-scroll h-[700px] max-h-[700px] w-full flex flex-col"></div>
-			<form class="flex justify-between gap-4 w-full" ws-send>
-				<input placeholder="Type your name:" name="author" class="border text-white border-white p-4 bg-transparent"/>
-				<input required name="message" class="border text-white border-white p-4 w-full bg-transparent"/>
+		<div class="flex underline justify-end mb-4 w-11/12">
+			<a href="/auth/logout">Logout →</a>
+		</div>
+		<section class="flex gap-12 items-center w-11/12 flex-col" hx-ext="ws" ws-connect={"/ws?userName=" + userName }>
+			<div id="chat" class="border-white border overflow-y-scroll h-[70vh] w-full flex flex-col"></div>
+			<form id="ws-form" class="flex justify-between gap-4 w-full" ws-send>
+				<input id="message" autocomplete="off" required name="message" class="border text-white border-white p-4 w-full bg-transparent"/>
 				@components.Button("Send", "")
 			</form>
 		</section>
+			<script>
+			    document.body.addEventListener('htmx:wsAfterMessage', function(e) {
+			    	document.querySelector("#message").value = "";
+			    });
+			</script>
+
 	}
 }
