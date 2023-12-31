@@ -1,3 +1,12 @@
 # Golang Chat App
 
-A web chat app made with Golang (Fiber framework), HTMX and Websockets. Also templ and UnoCSS for components and styles.
+A public chat room. Made with Golang and HTMX.
+
+## STACK USED
+
+- Golang (1.21.2)
+- Fiber Web Framework
+- HTMX
+- UnoCSS
+- SQLite database
+- WebSockets
