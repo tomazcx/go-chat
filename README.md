@@ -11,3 +11,13 @@ A public chat room. Made with Golang and HTMX.
 - SQLite database
 - WebSockets
 
+## USAGE
+
+Execute: 
+
+```bash
+make dev
+```
+
+To run the development server.
+
