@@ -3,6 +3,12 @@ package views
 import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/shared"
 import "github.com/tomazcx/go-chat-app/internal/application/httpapi/templates/components"
 
+script clearInput(){
+    document.body.addEventListener('htmx:wsBeforeMessage', function(e) {
+    	document.querySelector("#message").value = "";
+    });
+}
+
 templ Chat(userName string) {
 	@shared.Index() {
 		<div class="flex underline justify-end mb-4 w-11/12">
@@ -15,11 +21,6 @@ templ Chat(userName string) {
 				@components.Button("Send", "")
 			</form>
 		</section>
-			<script>
-			    document.body.addEventListener('htmx:wsAfterMessage', function(e) {
-			    	document.querySelector("#message").value = "";
-			    });
-			</script>
-
+		@clearInput()
 	}
 }
